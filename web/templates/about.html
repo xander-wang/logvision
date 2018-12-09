@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/favicon.png">
+
+    <title>LogVision</title>
+
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+
+    <script src="/static/js/echarts.min.js"></script>
+    <script src="/static/js/jquery.slim.min.js"></script>
+    <script src="/static/js/socket.io.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-sm-3 col-md-1 mr-0" href="#"><b>LogVision</b><sup>beta</sup></a>
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="http://www.github.com/xander-wang">R&D by Xander Wang</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-md-1 d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                        <a class="nav-link" href="/">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:8090">
+                            Database
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:8080">
+                            Compute
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/about">
+                            About<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-11 pt-3 px-4">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2">About</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">LogVision</h4>
+                            <p>LogVision is a streaming log analysis & intrusion detection system. It's a simple and comprehensive example of a streaming data analysis & intrusion detection workflow. It's designed and developed by one developer, and it took
+                                him 100 days(nights) to build from scratch. For more information, you can refer to the project GitHub page.</p>
+                            <hr>
+                            <p class="mb-0"><b>The current prototype is not built for production use.</b></p>
+                            <hr>
+                            <p>LogVision is built upon: </p>
+                            <p>Apache Flume, Apache Kafka, Apache Spark, MongoDB, Redis, Flask, Socket.IO, Echarts</p>
+                            <p>Design & Development:</p>
+                            <p>Xander Wang</p>
+                            <hr>
+                            <p>2018.12.7 @TKU, Taiwan</p>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+    </div>
+    </div>

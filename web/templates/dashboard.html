@@ -1,0 +1,869 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/static/favicon.png">
+
+    <title>LogVision - Dashboard</title>
+
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/dashboard.css" rel="stylesheet">
+
+    <script src="/static/js/echarts.min.js"></script>
+    <script src="/static/js/jquery.slim.min.js"></script>
+    <script src="/static/js/socket.io.min.js"></script>
+
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+    <a class="navbar-brand col-sm-3 col-md-1 mr-0" href="#"><b>LogVision</b><sup>beta</sup></a>
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap">
+            <a class="nav-link" href="http://www.github.com/xander-wang">R&D by Xander Wang</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-1 d-none d-md-block bg-light sidebar">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">
+                            Dashboard <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:8090">
+                            Database
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://127.0.0.1:8080">
+                            Compute
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">
+                            About
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-11 pt-3 px-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <b>It may take a while to load streaming data. | 加载实时数据需要时间。</b>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-5">
+                    <div class="alert alert-dark">
+                        <h4 class="alert-heading">Welcome!</h4>
+                        <p>Welcome to LogVision<sup>beta</sup> Dashboard. From here you can get <b>streaming</b> log
+                            metrics.
+                        </p>
+                        <hr>
+                        <p>Scroll down to see more, click items on the left to navigate.</p>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="alert alert-warning">
+                        <h4 class="alert-heading">Attention!</h4>
+                        <p>It may require <b>more RAM</b> to load streaming data.</p>
+                        <hr>
+                        <p>加载实时数据可能需要大量内存。若页面卡顿，请尝试释放内存后重试。</p>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="card mb-3">
+                        <h5 class="card-header">Simulation Metrics (Static)</h5>
+                        <div class="card-body">
+                            Log data appending rate: <b>1~10 record(s)/sec</b><br>
+                            Processing interval: <b>5 sec</b><br>
+                            Delivering interval: <b>5~10 sec</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h4 id="total_req" class="card-title">Loading...</h4>
+                                    <p>Total Request</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h4 id="valid_req" class="card-title">Loading...</h4>
+                                    <p>Valid Request</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h4 id="not_found_req" class="card-title">Loading...</h4>
+                                    <p>Not-found Request</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h4 id="visitor" class="card-title">Loading...</h4>
+                                    <p>Visitor</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h4 id="traffic" class="card-title">Loading...</h4>
+                                    <p>Traffic (MiB)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card bg-light mb-3">
+                                <div class="card-body">
+                                    <h4 id="log_size" class="card-title">Loading...</h4>
+                                    <p>Log Size (MiB)</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Request Count Timeline</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div id="req_count_timeline" style="height: 300px"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header ">Real-time Tracking</h5>
+                                <div class="card-body ">
+                                    <div id="tracking" style="height: 600px; "></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Pie</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card">
+                                                <div class="card-body ">
+                                                    <h5 class="card-title">Status Code</h5>
+                                                    <div id="statuscode_pie" style="height: 350px; "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 ">
+                                            <div class="card ">
+                                                <div class="card-body ">
+                                                    <h5 class="card-title">Reqest Method</h5>
+                                                    <div id="req_method_pie" style="height: 350px; "></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Host Ranking</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div id="host_ranking" style="height: 550px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Malicious</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="card text-white bg-danger mb-3">
+                                                <div class="card-body">
+                                                    <h1 id="intrusion_count" class="card-title">Loading...</h1>
+                                                    <p class="card-text">Potential Threats</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="card text-white bg-info mb-3">
+                                                <div class="card-body">
+                                                    <h1 id="normal_count" class="card-title">Loading...</h1>
+                                                    <p class="card-text">Potential Normal</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Malicious/Normal Timeline</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div id="malicious_line" style="height: 355px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">History Tracking</h5>
+                                <div class="card-body ">
+                                    <div id="tracking_all" style="height: 600px; "></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Request Ranking</h5>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="container-fluid">
+                                            <div id="req_ranking" style="height: 700px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript ">
+
+    // Malicious/Normal  board init
+    var malicious_line = echarts.init(document.getElementById('malicious_line'));
+    malicious_line.showLoading();
+    malicious_line.setOption({
+        grid: {
+            bottom: 80
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                animation: false,
+                label: {
+                    backgroundColor: '#505765'
+                }
+            }
+        },
+        legend: {
+            data: ['Potential Threats', 'Potential Normal'],
+            x: 'center'
+        },
+        dataZoom: [
+            {
+                show: true,
+                realtime: true,
+                start: 65,
+                end: 85
+            },
+            {
+                type: 'inside',
+                realtime: true,
+                start: 65,
+                end: 85
+            }
+        ],
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                axisLine: {onZero: false},
+                data: []
+            }
+        ],
+        yAxis: [
+            {
+                name: 'Potential Threats',
+                type: 'value',
+                max: 50
+            },
+            {
+                name: 'Potential Normal',
+                nameLocation: 'start',
+                max: 50,
+                type: 'value',
+                inverse: true
+            }
+        ],
+        series: [
+            {
+                name: 'Potential Threats',
+                type: 'line',
+                animation: false,
+                areaStyle: {},
+                lineStyle: {
+                    width: 1
+                },
+                data: []
+            },
+            {
+                name: 'Potential Normal',
+                type: 'line',
+                yAxisIndex: 1,
+                animation: false,
+                areaStyle: {},
+                lineStyle: {
+                    width: 1
+                },
+                data: []
+            }
+        ]
+    });
+
+    // Real-time Tracking board scatter data persistence init
+    var intrusion_scatter = [];
+    var normal_scatter = [];
+
+    // Real-time Tracking board init
+    var tracking = echarts.init(document.getElementById("tracking"));
+    tracking.showLoading();
+    tracking.setOption({
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a0}<br/>Host: {b0}<br/>Info: {c0}'
+        },
+        title: {
+            text: 'LogVision - Geo-Tracking Subsystem',
+            subtext: 'Latest incoming data would be shown.',
+            left: 'center',
+            textStyle: {
+                color: '#000'
+            }
+        },
+        bmap: {
+            center: [104.114129, 37.550339],
+            zoom: 5,
+            roam: true
+        },
+        series: [{
+            name: 'Potential Normal',
+            type: 'scatter',
+            coordinateSystem: 'bmap',
+            data: [],
+            symbolSize: 8,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#3398DB'
+                }
+            }
+        }, {
+            name: 'Potential Threat',
+            type: 'effectScatter',
+            coordinateSystem: 'bmap',
+            data: [],
+            symbolSize: 10,
+            showEffectOn: 'emphasis',
+            rippleEffect: {
+                brushType: 'stroke',
+                scale: 10
+            },
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#FF0000',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            zlevel: 1
+        }]
+    });
+
+    // History Tracking board init
+    var tracking_all = echarts.init(document.getElementById("tracking_all"));
+    tracking_all.showLoading();
+    tracking_all.setOption({
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a0}<br/>Host: {b0}<br/>Info: {c0}'
+        },
+        title: {
+            text: 'LogVision - Geo-Tracking Subsystem',
+            subtext: 'Only latest batch (~1k records) would be shown.',
+            left: 'center',
+            textStyle: {
+                color: '#000'
+            }
+        },
+        bmap: {
+            center: [104.114129, 37.550339],
+            zoom: 5,
+            roam: true
+        },
+        series: [{
+            name: 'Potential Normal',
+            type: 'scatter',
+            coordinateSystem: 'bmap',
+            data: [],
+            symbolSize: 8,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#3398DB'
+                }
+            }
+        }, {
+            name: 'Potential Threat',
+            type: 'effectScatter',
+            coordinateSystem: 'bmap',
+            data: [],
+            symbolSize: 10,
+            showEffectOn: 'emphasis',
+            rippleEffect: {
+                brushType: 'stroke',
+                scale: 10
+            },
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#FF0000',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            zlevel: 1
+        }]
+    });
+
+    // Host ranking board init
+    var host_ranking = echarts.init(document.getElementById('host_ranking'));
+    host_ranking.showLoading();
+    host_ranking.setOption({
+        color: ['#3398DB'],
+        tooltip: {},
+        xAxis: {
+            type: 'category',
+            axisLabel: {
+                interval: 0,
+                rotate: 20
+            },
+            data: []
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [],
+            type: 'bar'
+        }]
+    });
+
+    // Req ranking board init
+    var req_ranking = echarts.init(document.getElementById('req_ranking'));
+    req_ranking.showLoading();
+    req_ranking.setOption({
+        color: ['#ffff00'],
+        tooltip: {},
+        grid: {
+            bottom: '20%'
+        },
+        xAxis: {
+            type: 'category',
+            axisLabel: {
+                interval: 0,
+                rotate: 20
+            },
+            data: []
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [{
+            data: [],
+            type: 'bar'
+        }]
+    });
+
+    // Pie board init
+    // statuscode
+    var statuscode_pie = echarts.init(document.getElementById('statuscode_pie'));
+    statuscode_pie.showLoading();
+    statuscode_pie.setOption({
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'horizontal',
+            left: 'left',
+            data: []
+        },
+        series: [
+            {
+                name: 'Status Code',
+                type: 'pie',
+                radius: '50%',
+                center: ['50%', '60%'],
+                data: [],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    });
+    // req method
+    var req_method_pie = echarts.init(document.getElementById('req_method_pie'));
+    req_method_pie.showLoading();
+    req_method_pie.setOption({
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'horizontal',
+            left: 'left',
+            data: []
+        },
+        series: [
+            {
+                name: 'Request Method',
+                type: 'pie',
+                radius: '50%',
+                center: ['50%', '60%'],
+                data: [],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    });
+
+    // Req Count Timeline init
+    var req_count_timeline = echarts.init(document.getElementById('req_count_timeline'));
+    req_count_timeline.showLoading();
+    req_count_timeline.setOption({
+        tooltip: {
+            trigger: 'axis',
+            position: function (pt) {
+                return [pt[0], '10%'];
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: []
+        },
+        yAxis: {
+            type: 'value',
+            boundaryGap: [0, '100%']
+        },
+        dataZoom: [{
+            type: 'inside',
+            start: 0,
+            end: 10
+        }, {
+            start: 0,
+            end: 10,
+            handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+            handleSize: '80%',
+            handleStyle: {
+                color: '#fff',
+                shadowBlur: 3,
+                shadowColor: 'rgba(0, 0, 0, 0.6)',
+                shadowOffsetX: 2,
+                shadowOffsetY: 2
+            }
+        }],
+        series: [
+            {
+                name: 'Request Count',
+                type: 'line',
+                smooth: true,
+                symbol: 'none',
+                sampling: 'average',
+                itemStyle: {
+                    color: 'rgb(255, 70, 131)'
+                },
+                areaStyle: {
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgb(255, 158, 68)'
+                    }, {
+                        offset: 1,
+                        color: 'rgb(255, 70, 131)'
+                    }])
+                },
+                data: []
+            }
+        ]
+    });
+
+    // resize func
+    window.onresize = function () {
+        malicious_line.resize();
+        tracking.resize();
+        tracking_all.resize();
+        host_ranking.resize();
+        req_ranking.resize();
+        statuscode_pie.resize();
+        req_method_pie.resize();
+        req_count_timeline.resize();
+    };
+
+    $(document).ready(function () {
+
+        // For SocketIO
+        namespace = '/main';
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        socket.on('main', function (res) {
+
+            // Counting board
+            document.getElementById('total_req').innerText = res.total_req;
+            document.getElementById('valid_req').innerText = res.valid_req;
+            document.getElementById('not_found_req').innerText = res.not_found_req;
+            document.getElementById('visitor').innerText = res.visitor;
+            document.getElementById('traffic').innerText = res.traffic;
+            document.getElementById('log_size').innerText = res.log_size;
+
+            // Malicious board
+            document.getElementById('intrusion_count').innerText = res.intrusion_count;
+            document.getElementById('normal_count').innerText = res.normal_count;
+
+            var time = res.i_n_datetime_sorted;
+            var intrusion_counts = res.i_n_intrusion_count;
+            var normal_counts = res.i_n_normal_count;
+
+            malicious_line.hideLoading();
+            malicious_line.setOption({
+                xAxis: [
+                    {
+                        data: res.i_n_datetime_sorted
+                    }
+                ],
+                series: [
+                    {
+                        data: res.i_n_intrusion_count
+                    },
+                    {
+                        data: res.i_n_normal_count
+                    }
+                ]
+            });
+
+
+            // Real-time Tracking board
+            var append_items = function (src, set) {
+                for (var i = 0; i < src.length; i++) {
+                    set.push(src[i])
+                }
+            };
+
+            append_items(res.intrusion_scatter, intrusion_scatter);
+            append_items(res.normal_scatter, normal_scatter);
+
+            tracking.hideLoading();
+            tracking.setOption({
+                series: [{
+                    name: 'Potential Normal',
+                    data: normal_scatter,
+                }, {
+                    name: 'Potential Threat',
+                    data: intrusion_scatter,
+                }]
+            });
+
+            // History Tracking board
+            tracking_all.hideLoading();
+            tracking_all.setOption({
+                series: [{
+                    name: 'Potential Normal',
+                    data: res.normal_scatter_all,
+                }, {
+                    name: 'Potential Threat',
+                    data: res.intrusion_scatter_all,
+                }]
+            });
+
+            // Host ranking board
+            var host = res.host_ranking_set[0].hosts;
+            var host_visit = res.host_ranking_set[0].counts;
+
+            host_ranking.hideLoading();
+            host_ranking.setOption({
+                xAxis: {
+                    data: host
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: host_visit
+                }]
+            });
+
+            // Req ranking board
+            var reqs = res.req_ranking_set[0].reqs;
+            var req_counts = res.req_ranking_set[0].counts;
+            req_ranking.hideLoading();
+            req_ranking.setOption({
+                xAxis: {
+                    data: reqs
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: req_counts
+                }]
+            });
+
+            // Pie board
+            // statuscode
+            statuscode_pie.hideLoading();
+            statuscode_pie.setOption({
+                legend: {
+                    data: res.statuscode_legend
+                },
+                series: [
+                    {
+                        data: res.statuscode_set
+                    }
+                ]
+            });
+            // req method
+            req_method_pie.hideLoading();
+            req_method_pie.setOption({
+                legend: {
+                    data: res.req_method_legend
+                },
+                series: [
+                    {
+                        data: res.req_method_set
+                    }
+                ]
+            });
+
+            // Req Count Timeline
+            req_count_timeline.hideLoading();
+            req_count_timeline.setOption({
+                xAxis: {
+                    data: res.datetime
+                },
+                series: [
+                    {
+                        data: res.datetime_count
+                    }
+                ]
+            });
+        });
+    });
+</script>

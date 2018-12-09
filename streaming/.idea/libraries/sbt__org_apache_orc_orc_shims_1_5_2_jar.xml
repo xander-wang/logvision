@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.apache.orc:orc-shims:1.5.2:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.orc/orc-shims/jars/orc-shims-1.5.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.orc/orc-shims/srcs/orc-shims-1.5.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

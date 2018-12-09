@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.apache.xbean:xbean-asm6-shaded:4.8:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.xbean/xbean-asm6-shaded/bundles/xbean-asm6-shaded-4.8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.xbean/xbean-asm6-shaded/srcs/xbean-asm6-shaded-4.8-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

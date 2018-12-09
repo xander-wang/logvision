@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.mongodb:mongo-java-driver:3.8.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.mongodb/mongo-java-driver/jars/mongo-java-driver-3.8.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.mongodb/mongo-java-driver/srcs/mongo-java-driver-3.8.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

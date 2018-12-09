@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.apache.kafka:kafka-clients:2.0.0:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.kafka/kafka-clients/jars/kafka-clients-2.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.kafka/kafka-clients/srcs/kafka-clients-2.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
