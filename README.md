@@ -16,6 +16,12 @@ Apache Kafka: 2.11-2.0.0
 
 Apache Spark: 2.3.1
 
+Python package: (已发现兼容性问题，需匹配以下版本）
+
+kafka-python==1.4.3
+
+redis==2.10.6
+
 ## 项目结构
 
 streaming: Spark的分析与入侵检测（Scala, sbt)
@@ -62,6 +68,12 @@ Apache Flume: 1.8.0
 Apache Kafka: 2.11-2.0.0
 
 Apache Spark: 2.3.1
+
+Python package: (Due to compatiblity issue, please use following version）
+
+kafka-python==1.4.3
+
+redis==2.10.6
 
 ## Project Structure
 
