@@ -1,5 +1,8 @@
 # LogVision / 实时web访问日志分析与入侵检测系统
 2018.12.8 v1.0.0
+
+## 2020.2更新：此版本已停止维护，参考新版本请移步[LogVision-ng](https://github.com/xander-wang/logvision-ng)。
+
 ## 简介
 
 LogVision是一套整合了web日志聚合、分发、实时处理、入侵检测、数据缓存和持久化与可视化的日志分析解决方案。其中，聚合采用Apache Flume，分发采用Apache Kafka，实时处理采用Spark Streaming，入侵检测采用Spark MLlib库，数据持久化使用MongoDB，缓存使用Redis，webapp与可视化采用Flask, Socket.IO, Echarts等，前端框架使用Bootstrap。
