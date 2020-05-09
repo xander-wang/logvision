@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>LogVision-欢迎</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/styles.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/js/custom.js"></script>
+
+    <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/socket.io.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a href="index.html">实时日志分析与入侵检测系统</a></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="sidebar content-box" style="display: block;">
+                    <ul class="nav">
+                        <!-- Main menu -->
+                        <li class="current"><a href="welcome"><i class="glyphicon glyphicon-asterisk"></i> 欢迎</a>
+                        </li>
+
+                        <li><a href="analysis"><i class="glyphicon glyphicon-stats"></i> 实时日志分析</a>
+                        </li>
+
+                        <li><a href="id"><i class="glyphicon glyphicon-adjust"></i> 实时入侵检测</a>
+                        </li>
+
+                        <li><a href="about"><i class="glyphicon glyphicon-info-sign"></i> 关于系统</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">欢迎使用</h4>
+                            <p>实时日志分析与入侵检测系统可提供面向网络安全的实时日志分析解决方案。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-info" role="alert">
+                                    <h4 id="sys_time" class="alert-heading">Loading...</h4>
+                                    <p>系统时间</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时日志流</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <h5 id="log_stream">
+                                Loading...
+                                <br><br>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+
+            <div class="copy text-center">
+                实时日志分析与入侵检测系统 仅供个人毕业设计演示用途<br> <a
+                    href='https://www.github.com/xander-wang/logvision_grad'>xander-wang/logvision_grad</a>
+            </div>
+
+        </div>
+    </footer>
+    
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+        namespace = '/sys_time';
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        socket.on('sys_time', function(res) {
+            document.getElementById("sys_time").innerText = res.data;
+        });
+    });
+
+    $(document).ready(function() {
+        namespace = '/log_stream';
+        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+        socket.on('log_stream', function(res) {
+            document.getElementById("log_stream").innerText = res.data;
+        });
+    });
+
+    </script>
+</body>
+
+</html>

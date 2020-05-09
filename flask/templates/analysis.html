@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LogVision-日志分析</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/styles.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/js/custom.js"></script>
+
+    <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/socket.io.js"></script>
+
+    <script type="text/javascript" src="/static/js/echarts/echarts.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/extension/dataTool.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/extension/bmap.js"></script>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=2.0&amp;ak=KOmVjPVUAey1G2E8zNhPiuQ6QiEmAwZu&amp;__ec_v__=20190126"></script>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/getscript?v=2.0&amp;ak=KOmVjPVUAey1G2E8zNhPiuQ6QiEmAwZu&amp;services=&amp;t=20200327103013"></script>
+
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a href="index.html">实时日志分析与入侵检测系统</a></h1>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="sidebar content-box" style="display: block;">
+                    <ul class="nav">
+                        <!-- Main menu -->
+                        <li><a href="welcome"><i class="glyphicon glyphicon-asterisk"></i> 欢迎</a>
+                        </li>
+
+                        <li class="current"><a href="analysis"><i class="glyphicon glyphicon-stats"></i> 实时日志分析</a>
+                        </li>
+
+                        <li><a href="id"><i class="glyphicon glyphicon-adjust"></i> 实时入侵检测</a>
+                        </li>
+
+                        <li><a href="about"><i class="glyphicon glyphicon-info-sign"></i> 关于系统</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">实时日志分析</h4>
+                            <p>实时日志分析功能可提供实时日志字段计数、数据图表与地理信息汇总等数据可视化展示功能，数据展示有一定延迟。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-info" role="alert">
+                                    <h4 id="sys_time" class="alert-heading">Loading...</h4>
+                                    <p>系统时间</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            namespace = '/sys_time';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            socket.on('sys_time', function (res) {
+                                document.getElementById("sys_time").innerText = res.data;
+                            });
+                        });
+                    </script>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时计数器</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">总请求数</h4>
+                                        <h2 id="host_count">...</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">成功请求数</h4>
+                                        <h2 id="success_count">...</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">其他请求数</h4>
+                                        <h2 id="other_count">...</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">访客数</h4>
+                                        <h2 id="visitor_count">...</h2>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">资源数</h4>
+                                        <h2 id="url_count">...</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">流量大小 (MB)</h4>
+                                        <h2 id="traffic_sum">...</h2>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="alert alert-dark" role="alert">
+                                        <h4 class="alert-heading">日志大小 (MB)</h4>
+                                        <h2 id="log_size">...</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            namespace = '/count_board';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            socket.on('count_board', function (res) {
+                                document.getElementById("host_count").innerText = res.host_count;
+                                document.getElementById("success_count").innerText = res.success_count;
+                                document.getElementById("other_count").innerText = res.other_count;
+                                document.getElementById("visitor_count").innerText = res.visitor_count;
+                                document.getElementById("url_count").innerText = res.url_count;
+                                document.getElementById("traffic_sum").innerText = res.traffic_sum;
+                                document.getElementById("log_size").innerText = res.log_size;
+                            });
+                        });
+                    </script>
+
+
+                    <div class="col-md-4">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时热门位置</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div id="geo" style="height:270px;"></div>
+                        </div>
+                    </div>
+                    <script>
+                        var geo = echarts.init(document.getElementById('geo'));
+                        window.onresize = function () {
+                            geo.resize();
+                        };
+                        geo.showLoading();
+                        geo.setOption({
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: '{a}<br/>IP地址: {b}<br/>坐标和计数: {c}'
+                            },
+                            bmap: {
+                                center: [118, 32],
+                                zoom: 5,
+                                roam: true,
+                                mapStyle: {
+                                    styleJson: [{
+                                        'featureType': 'water',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'land',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#f3f3f3'
+                                        }
+                                    }, {
+                                        'featureType': 'railway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'highway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#fdfdfd'
+                                        }
+                                    }, {
+                                        'featureType': 'highway',
+                                        'elementType': 'labels',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry.fill',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'poi',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'green',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'subway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'manmade',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'local',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'labels',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'boundary',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'building',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'label',
+                                        'elementType': 'labels.text.fill',
+                                        'stylers': {
+                                            'color': '#999999'
+                                        }
+                                    }]
+                                }
+                            },
+                            series: [
+                                {
+                                    name: '热门位置',
+                                    type: 'effectScatter',
+                                    coordinateSystem: 'bmap',
+                                    showEffectOn: 'render',
+                                    rippleEffect: {
+                                        brushType: 'stroke'
+                                    },
+                                    hoverAnimation: true,
+                                    label: {
+                                        formatter: '{b}',
+                                        position: 'right',
+                                        show: true
+                                    },
+                                    itemStyle: {
+                                        color: 'purple',
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    },
+                                    zlevel: 1
+                                }
+                            ]
+                        });
+
+                        $(document).ready(function () {
+                            namespace = '/hot_geo';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            socket.on('hot_geo', function (res) {
+                                geo.hideLoading();
+                                geo.setOption({
+                                    series: [{
+                                        data: res.data,
+                                        symbolSize: 10,
+                                    }]
+                                })
+                                console.log(res.data)
+                            });
+                        });
+                    </script>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="content-box-header">
+                                    <div class="panel-title">实时热门资源排名</div>
+                                </div>
+                                <div class="content-box-large box-with-header">
+
+                                    <table id="url" class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">排名</th>
+                                                <th scope="col">资源位置</th>
+                                                <th scope="col">请求次数</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    namespace = '/hot_url';
+                                    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                    var items = ""
+                                    socket.on('hot_url', function (res) {
+                                        items = ""
+                                        $("#url tbody").html("");
+
+                                        $.each(res.data, function (i, item) {
+                                            items += "<tr>";
+                                            items += "<th scope='row'>" + item.no + "</td>";
+                                            items += "<td>" + item.url + "</td>";
+                                            items += "<td>" + item.count + "</td>";
+                                            items += "</tr>";
+                                        });
+                                        $('#url tbody').append(items);
+                                    });
+                                });
+                            </script>
+
+                            <div class="col-md-5">
+                                <div class="content-box-header">
+                                    <div class="panel-title">实时热门IP排名</div>
+                                </div>
+                                <div class="content-box-large box-with-header">
+
+                                    <table id="ip" class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">排名</th>
+                                                <th scope="col">IP地址</th>
+                                                <th scope="col">位置</th>
+                                                <th scope="col">请求次数</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                            <script>
+                                $(document).ready(function () {
+                                    namespace = '/hot_ip';
+                                    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                    var items = ""
+                                    socket.on('hot_ip', function (res) {
+                                        items = ""
+                                        $("#ip tbody").html("");
+
+                                        $.each(res.data, function (i, item) {
+                                            items += "<tr>";
+                                            items += "<th scope='row'>" + item.no + "</td>";
+                                            items += "<td>" + item.ip + "</td>";
+                                            items += "<td>" + item.address + "</td>";
+                                            items += "<td>" + item.count + "</td>";
+                                            items += "</tr>";
+                                        });
+                                        $('#ip tbody').append(items);
+                                    });
+                                });
+                            </script>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="content-box-header">
+                                    <div class="panel-title">实时状态码比例</div>
+                                </div>
+                                <div class="content-box-large box-with-header">
+                                    <div class="container-fluid">
+                                        <div id="status_code_pie" style="height: 300px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                var status_code_pie = echarts.init(document.getElementById('status_code_pie'));
+                                window.onresize = function () {
+                                    status_code_pie.resize();
+                                };
+                                status_code_pie.showLoading();
+                                status_code_pie.setOption({
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                                    },
+                                    legend: {
+                                        type: 'scroll',
+                                        orient: 'vertical',
+                                        right: 10,
+                                        top: 20,
+                                        bottom: 20,
+                                        data: []
+                                    },
+                                    series: [
+                                        {
+                                            name: '实时状态码比例',
+                                            type: 'pie',
+                                            radius: '55%',
+                                            center: ['40%', '50%'],
+                                            data: [],
+                                            emphasis: {
+                                                itemStyle: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                });
+
+                                $(document).ready(function () {
+                                    namespace = '/status_code_pie';
+                                    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                    socket.on('status_code_pie', function (res) {
+                                        status_code_pie.hideLoading();
+                                        status_code_pie.setOption({
+                                            legend: {
+                                                data: res.legend
+                                            },
+                                            series: [
+                                                {
+                                                    data: res.data
+                                                }
+                                            ]
+                                        });
+                                    });
+                                });
+                            </script>
+
+                            <div class="col-md-6">
+                                <div class="content-box-header">
+                                    <div class="panel-title">实时请求方式比例</div>
+                                </div>
+                                <div class="content-box-large box-with-header">
+                                    <div class="container-fluid">
+                                        <div id="req_method_pie" style="height: 300px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                var req_method_pie = echarts.init(document.getElementById('req_method_pie'));
+                                window.onresize = function () {
+                                    req_method_pie.resize();
+                                };
+                                req_method_pie.showLoading();
+                                req_method_pie.setOption({
+                                    tooltip: {
+                                        trigger: 'item',
+                                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                                    },
+                                    legend: {
+                                        type: 'scroll',
+                                        orient: 'vertical',
+                                        right: 10,
+                                        top: 20,
+                                        bottom: 20,
+                                        data: []
+                                    },
+                                    series: [
+                                        {
+                                            name: '实时请求方式比例',
+                                            type: 'pie',
+                                            radius: '55%',
+                                            center: ['40%', '50%'],
+                                            data: [],
+                                            emphasis: {
+                                                itemStyle: {
+                                                    shadowBlur: 10,
+                                                    shadowOffsetX: 0,
+                                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                                }
+                                            }
+                                        }
+                                    ]
+                                });
+
+                                $(document).ready(function () {
+                                    namespace = '/req_method_pie';
+                                    var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                    socket.on('req_method_pie', function (res) {
+                                        req_method_pie.hideLoading();
+                                        req_method_pie.setOption({
+                                            legend: {
+                                                data: res.legend
+                                            },
+                                            series: [
+                                                {
+                                                    data: res.data
+                                                }
+                                            ]
+                                        });
+                                    });
+                                });
+                            </script>
+
+                        </div>
+
+                        <div class="content-box-header">
+                            <div class="panel-title">实时请求计数（按时间顺序）</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div class="container-fluid">
+                                <div id="req_count_timeline" style="height: 350px;"></div>
+                            </div>
+                        </div>
+                        <script>
+                            var req_count_timeline = echarts.init(document.getElementById('req_count_timeline'));
+                            window.onresize = function () {
+                                req_count_timeline.resize();
+                            };
+                            req_count_timeline.showLoading();
+                            req_count_timeline.setOption({
+                                tooltip: {
+                                    trigger: 'axis',
+                                    position: function (pt) {
+                                        return [pt[0], '10%'];
+                                    }
+                                },
+                                xAxis: {
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    data: []
+                                },
+                                yAxis: {
+                                    type: 'value',
+                                    boundaryGap: [0, '100%']
+                                },
+                                dataZoom: [{
+                                    type: 'inside',
+                                    start: 0,
+                                    end: 10
+                                }, {
+                                    start: 0,
+                                    end: 10,
+                                    handleIcon: 'M10.7,11.9v-1.3H9.3v1.3c-4.9,0.3-8.8,4.4-8.8,9.4c0,5,3.9,9.1,8.8,9.4v1.3h1.3v-1.3c4.9-0.3,8.8-4.4,8.8-9.4C19.5,16.3,15.6,12.2,10.7,11.9z M13.3,24.4H6.7V23h6.6V24.4z M13.3,19.6H6.7v-1.4h6.6V19.6z',
+                                    handleSize: '80%',
+                                    handleStyle: {
+                                        color: '#fff',
+                                        shadowBlur: 3,
+                                        shadowColor: 'rgba(0, 0, 0, 0.6)',
+                                        shadowOffsetX: 2,
+                                        shadowOffsetY: 2
+                                    }
+                                }],
+                                series: [
+                                    {
+                                        name: '请求数量',
+                                        type: 'line',
+                                        smooth: true,
+                                        symbol: 'none',
+                                        sampling: 'average',
+                                        itemStyle: {
+                                            color: 'rgb(255, 70, 131)'
+                                        },
+                                        areaStyle: {
+                                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                                offset: 0,
+                                                color: 'rgb(255, 158, 68)'
+                                            }, {
+                                                offset: 1,
+                                                color: 'rgb(255, 70, 131)'
+                                            }])
+                                        },
+                                        data: []
+                                    }
+                                ]
+                            });
+
+                            $(document).ready(function () {
+                                namespace = '/req_count_timeline';
+                                var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                socket.on('req_count_timeline', function (res) {
+                                    req_count_timeline.hideLoading();
+                                    req_count_timeline.setOption({
+                                        xAxis: {
+                                            data: res.date
+                                        },
+                                        series: [
+                                            {
+                                                data: res.data
+                                            }
+                                        ]
+                                    });
+                                });
+                            });
+                        </script>
+
+                        <div class="content-box-header">
+                            <div class="panel-title">IP请求数排序</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div class="container-fluid">
+                                <div id="ip_ranking" style="height: 300px;"></div>
+                            </div>
+                        </div>
+                        <script>
+                            var ip_ranking = echarts.init(document.getElementById('ip_ranking'));
+                            window.onresize = function () {
+                                ip_ranking.resize();
+                            }
+                            ip_ranking.showLoading();
+                            ip_ranking.setOption({
+                                color: ['#3398DB'],
+                                tooltip: {
+                                    trigger: 'axis',
+                                    axisPointer: {
+                                        type: 'shadow'
+                                    }
+                                },
+                                grid: {
+                                    left: '3%',
+                                    right: '4%',
+                                    bottom: '3%',
+                                    containLabel: true
+                                },
+                                xAxis: [
+                                    {
+                                        type: 'category',
+                                        data: [],
+                                        axisTick: {
+                                            alignWithLabel: true
+                                        },
+                                    }
+                                ],
+                                yAxis: [
+                                    {
+                                        type: 'value'
+                                    }
+                                ],
+                                series: [
+                                    {
+                                        name: '请求数',
+                                        type: 'bar',
+                                        barWidth: '60%',
+                                        data: []
+                                    }
+                                ]
+                            });
+
+                            $(document).ready(function () {
+                                namespace = '/ip_ranking';
+                                var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                socket.on('ip_ranking', function (res) {
+                                    ip_ranking.hideLoading();
+                                    ip_ranking.setOption({
+                                        xAxis: [
+                                            {
+                                                data: res.ip
+                                            }
+                                        ],
+                                        series: [
+                                            {
+                                                data: res.count
+                                            }
+                                        ]
+                                    });
+                                });
+                            });
+                        </script>
+
+
+
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时日志流</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <h5 id="log_stream">
+                                Loading...
+                                <br><br>
+                            </h5>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            namespace = '/log_stream';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            socket.on('log_stream', function (res) {
+                                document.getElementById("log_stream").innerText = res.data;
+                            });
+                        });
+                    </script>
+                </div>
+
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+
+                <div class="copy text-center">
+                    实时日志分析与入侵检测系统 仅供个人毕业设计演示用途<br> <a
+                        href='https://www.github.com/xander-wang/logvision_grad'>xander-wang/logvision_grad</a>
+                </div>
+
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+
+            // 准备图表
+
+            // 自适应
+
+
+            // ws数据接口
+
+
+
+
+
+
+
+
+
+
+        </script>
+
+</body>
+
+</html>

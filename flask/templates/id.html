@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>LogVision-入侵检测</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/css/styles.css" rel="stylesheet">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery.js"></script>
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/static/js/custom.js"></script>
+
+    <script type="text/javascript" src="/static/js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="/static/js/socket.io.js"></script>
+
+    <script type="text/javascript" src="/static/js/echarts/echarts.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/extension/dataTool.js"></script>
+    <script type="text/javascript" src="/static/js/echarts/extension/bmap.js"></script>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/api?v=2.0&amp;ak=KOmVjPVUAey1G2E8zNhPiuQ6QiEmAwZu&amp;__ec_v__=20190126"></script>
+    <script type="text/javascript"
+        src="https://api.map.baidu.com/getscript?v=2.0&amp;ak=KOmVjPVUAey1G2E8zNhPiuQ6QiEmAwZu&amp;services=&amp;t=20200327103013"></script>
+
+    <script type="text/javascript" src="/static/js/vue.min.js"></script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- Logo -->
+                    <div class="logo">
+                        <h1><a href="index.html">实时日志分析与入侵检测系统</a></h1>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="page-content">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="sidebar content-box" style="display: block;">
+                    <ul class="nav">
+                        <!-- Main menu -->
+                        <li><a href="welcome"><i class="glyphicon glyphicon-asterisk"></i> 欢迎</a>
+                        </li>
+
+                        <li><a href="analysis"><i class="glyphicon glyphicon-stats"></i> 实时日志分析</a>
+                        </li>
+
+                        <li class="current"><a href="id"><i class="glyphicon glyphicon-adjust"></i> 实时入侵检测</a>
+                        </li>
+
+                        <li><a href="about"><i class="glyphicon glyphicon-info-sign"></i> 关于系统</a></li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">实时入侵检测</h4>
+                            <p>实时入侵检测使用实时日志中的请求资源地址与基于分类的方法，为入侵检测提供参考。</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="alert alert-danger" role="alert">
+                                    <h4 id="bad_count" class="alert-heading">...</h4>
+                                    <p>可能异常请求实时计数</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="alert alert-info" role="alert">
+                                    <h4 id="good_count" class="alert-heading">...</h4>
+                                    <p>可能正常请求实时计数</p>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+                                namespace = '/bad_count';
+                                var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                socket.on('bad_count', function (res) {
+                                    document.getElementById("bad_count").innerText = res.data;
+                                });
+                            });
+
+                            $(document).ready(function () {
+                                namespace = '/good_count';
+                                var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                                socket.on('good_count', function (res) {
+                                    document.getElementById("good_count").innerText = res.data;
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时入侵分类计数（按时间顺序）</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div id="url_cate_count_timeline" style="height: 350px;"></div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    var url_cate_count_timeline = echarts.init(document.getElementById('url_cate_count_timeline'));
+                    window.onresize = function () {
+                        url_cate_count_timeline.resize();
+                    };
+                    url_cate_count_timeline.showLoading();
+                    url_cate_count_timeline.setOption({
+                        grid: {
+                            bottom: 80
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                animation: false,
+                                label: {
+                                    backgroundColor: '#505765'
+                                }
+                            }
+                        },
+                        legend: {
+                            data: ['异常请求数', '正常请求数'],
+                            left: 10
+                        },
+                        dataZoom: [
+                            {
+                                show: true,
+                                realtime: true,
+                                start: 65,
+                                end: 85
+                            },
+                            {
+                                type: 'inside',
+                                realtime: true,
+                                start: 65,
+                                end: 85
+                            }
+                        ],
+                        xAxis: [
+                            {
+                                type: 'category',
+                                boundaryGap: false,
+                                axisLine: { onZero: false },
+                                data: []
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                name: '异常请求数',
+                                type: 'value',
+                                max: 10
+                            },
+                            {
+                                name: '正常请求数',
+                                nameLocation: 'start',
+                                max: 800,
+                                type: 'value',
+                                inverse: true
+                            }
+                        ],
+                        series: [
+                            {
+                                name: '异常请求数',
+                                type: 'line',
+                                animation: true,
+                                areaStyle: {},
+                                lineStyle: {
+                                    width: 1
+                                },
+                                data: []
+                            },
+                            {
+                                name: '正常请求数',
+                                type: 'line',
+                                yAxisIndex: 1,
+                                animation: true,
+                                areaStyle: {},
+                                lineStyle: {
+                                    width: 1
+                                },
+                                data: []
+                            }
+                        ]
+                    });
+
+                    $(document).ready(function () {
+                        namespace = '/url_cate_count_timeline';
+                        var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                        socket.on('url_cate_count_timeline', function (res) {
+                            url_cate_count_timeline.hideLoading();
+                            url_cate_count_timeline.setOption({
+                                xAxis: {
+                                    data: res.date
+                                },
+                                series: [
+                                    {
+                                        data: res.bad_data
+                                    },
+                                    {
+                                        data: res.good_data
+                                    }
+                                ]
+                            });
+                        });
+                    });
+                </script>
+
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时正常请求地理标记</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div id="good_geo" style="height:400px;"></div>
+                        </div>
+                    </div>
+                    <script>
+                        var good_geo = echarts.init(document.getElementById('good_geo'));
+                        window.onresize = function () {
+                            good_geo.resize();
+                        };
+                        good_geo.showLoading();
+                        good_geo.setOption({
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: '{a}<br/>IP地址: {b}<br/>数据: {c}'
+                            },
+                            bmap: {
+                                center: [118, 32],
+                                zoom: 5,
+                                roam: true,
+                                mapStyle: {
+                                    styleJson: [{
+                                        'featureType': 'water',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'land',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#f3f3f3'
+                                        }
+                                    }, {
+                                        'featureType': 'railway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'highway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#fdfdfd'
+                                        }
+                                    }, {
+                                        'featureType': 'highway',
+                                        'elementType': 'labels',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry.fill',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'poi',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'green',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'subway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'manmade',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'local',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'labels',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'boundary',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'building',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'label',
+                                        'elementType': 'labels.text.fill',
+                                        'stylers': {
+                                            'color': '#999999'
+                                        }
+                                    }]
+                                }
+                            },
+                            series: [
+                                {
+                                    name: '正常请求定位',
+                                    type: 'effectScatter',
+                                    coordinateSystem: 'bmap',
+                                    showEffectOn: 'render',
+                                    rippleEffect: {
+                                        brushType: 'stroke'
+                                    },
+                                    hoverAnimation: true,
+                                    label: {
+                                        formatter: '{b}',
+                                        position: 'right',
+                                        show: true
+                                    },
+                                    itemStyle: {
+                                        color: 'purple',
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    },
+                                    zlevel: 1
+                                }
+                            ]
+                        });
+
+                        $(document).ready(function () {
+                            namespace = '/good_geo';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            socket.on('good_geo', function (res) {
+                                good_geo.hideLoading();
+                                good_geo.setOption({
+                                    series: [{
+                                        data: res.data,
+                                        symbolSize: 10,
+                                    }]
+                                })
+                            });
+                        });
+                    </script>
+
+                    <div class="col-md-6">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时异常请求地理标记</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <div id="bad_geo" style="height:400px;"></div>
+                        </div>
+                    </div>
+                    <script>
+                        var bad_geo = echarts.init(document.getElementById('bad_geo'));
+                        window.onresize = function () {
+                            bad_geo.resize();
+                        };
+                        bad_geo.showLoading();
+                        bad_geo.setOption({
+                            tooltip: {
+                                trigger: 'item',
+                                formatter: '{a}<br/>IP地址: {b}<br/>数据: {c}'
+                            },
+                            bmap: {
+                                center: [118, 32],
+                                zoom: 5,
+                                roam: true,
+                                mapStyle: {
+                                    styleJson: [{
+                                        'featureType': 'water',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'land',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#f3f3f3'
+                                        }
+                                    }, {
+                                        'featureType': 'railway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'highway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#fdfdfd'
+                                        }
+                                    }, {
+                                        'featureType': 'highway',
+                                        'elementType': 'labels',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'geometry.fill',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'poi',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'green',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'subway',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'manmade',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'local',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'arterial',
+                                        'elementType': 'labels',
+                                        'stylers': {
+                                            'visibility': 'off'
+                                        }
+                                    }, {
+                                        'featureType': 'boundary',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#fefefe'
+                                        }
+                                    }, {
+                                        'featureType': 'building',
+                                        'elementType': 'all',
+                                        'stylers': {
+                                            'color': '#d1d1d1'
+                                        }
+                                    }, {
+                                        'featureType': 'label',
+                                        'elementType': 'labels.text.fill',
+                                        'stylers': {
+                                            'color': '#999999'
+                                        }
+                                    }]
+                                }
+                            },
+                            series: [
+                                {
+                                    name: '异常请求定位',
+                                    type: 'effectScatter',
+                                    coordinateSystem: 'bmap',
+                                    showEffectOn: 'render',
+                                    rippleEffect: {
+                                        brushType: 'stroke'
+                                    },
+                                    hoverAnimation: true,
+                                    label: {
+                                        formatter: '{b}',
+                                        position: 'right',
+                                        show: true
+                                    },
+                                    itemStyle: {
+                                        color: 'red',
+                                        shadowBlur: 10,
+                                        shadowColor: '#333'
+                                    },
+                                    zlevel: 1
+                                }
+                            ]
+                        });
+
+                        $(document).ready(function () {
+                            namespace = '/bad_geo';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            socket.on('bad_geo', function (res) {
+                                bad_geo.hideLoading();
+                                bad_geo.setOption({
+                                    series: [{
+                                        data: res.data,
+                                        symbolSize: 10,
+                                    }]
+                                })
+                            });
+                        });
+                    </script>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时异常请求概览</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <table id="bad_detail" class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">IP</th>
+                                        <th scope="col">来源</th>
+                                        <th scope="col">资源</th>
+                                        <th scope="col">时间</th>
+                                        <th scope="col">方式</th>
+                                        <th scope="col">协议</th>
+                                        <th scope="col">状态码</th>
+                                        <th scope="col">入侵判断</th>
+                                        <th scope="col">参考概率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            namespace = '/bad_detail';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            var items = ""
+                            socket.on('bad_detail', function (res) {
+                                $.each(res.data, function (i, item) {
+                                    items += "<tr>";
+                                    items += "<td>" + item.host + "</td>";
+                                    items += "<td>" + item.address + "</td>";
+                                    items += "<td>" + item.url + "</td>";
+                                    items += "<td>" + item.datetime + "</td>";
+                                    items += "<td>" + item.req_method + "</td>";
+                                    items += "<td>" + item.protocol + "</td>";
+                                    items += "<td>" + item.status_code + "</td>";
+                                    items += "<td>" + item.pred + "</td>";
+                                    items += "<td>" + item.prob + "</td>";
+                                    items += "</tr>";
+                                });
+                                $('#bad_detail tbody').append(items);
+                            });
+                        });
+                    </script>
+
+
+                    <div class="col-md-12">
+                        <div class="content-box-header">
+                            <div class="panel-title">实时正常请求概览</div>
+                        </div>
+                        <div class="content-box-large box-with-header">
+                            <table id="good_detail" class="table table-sm table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">IP</th>
+                                        <th scope="col">来源</th>
+                                        <th scope="col">资源</th>
+                                        <th scope="col">时间</th>
+                                        <th scope="col">方式</th>
+                                        <th scope="col">协议</th>
+                                        <th scope="col">状态码</th>
+                                        <th scope="col">入侵判断</th>
+                                        <th scope="col">参考概率</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            namespace = '/good_detail';
+                            var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+                            var items = ""
+                            socket.on('good_detail', function (res) {
+                                items = ""
+                                $('#good_detail tbody').html("");
+
+                                $.each(res.data, function (i, item) {
+                                    items += "<tr>";
+                                    items += "<td>" + item.host + "</td>";
+                                    items += "<td>" + item.address + "</td>";
+                                    items += "<td>" + item.url + "</td>";
+                                    items += "<td>" + item.datetime + "</td>";
+                                    items += "<td>" + item.req_method + "</td>";
+                                    items += "<td>" + item.protocol + "</td>";
+                                    items += "<td>" + item.status_code + "</td>";
+                                    items += "<td>" + item.pred + "</td>";
+                                    items += "<td>" + item.prob + "</td>";
+                                    items += "</tr>";
+                                });
+                                $('#good_detail tbody').append(items);
+                            });
+                        });
+                    </script>
+                </div>
+
+
+            </div>
+        </div>
+
+        <footer>
+            <div class="container">
+
+                <div class="copy text-center">
+                    实时日志分析与入侵检测系统 仅供个人毕业设计演示用途<br> <a
+                        href='https://www.github.com/xander-wang/logvision_grad'>xander-wang/logvision_grad</a>
+                </div>
+
+            </div>
+        </footer>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://code.jquery.com/jquery.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../static/js/custom.js"></script>
+</body>
+
+</html>

