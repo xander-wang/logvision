@@ -1,5 +1,5 @@
 # LogVision / 使用大数据的分布式实时日志分析与入侵检测系统
-[详细开发文档](https://xander-wang.github.io/2020/05/09/logvision/)
+[开发文档](https://xander-wang.github.io/2020/05/09/logvision/)
 ## 版本记录（当前2.0）
 - 2018.12.8 v1.0：原型版本，有bug。
 - 2020.5.9 v2.0：初步完善版本，可以实现预期效果。
