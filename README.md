@@ -1,7 +1,5 @@
 # LogVision / 使用大数据的分布式实时日志分析与入侵检测系统
-
 [详细开发文档](https://xander-wang.github.io/2020/05/09/logvision/)
-
 ## 版本记录（当前2.0）
 - 2018.12.8 v1.0：原型版本，有bug。
 - 2020.5.9 v2.0：初步完善版本，可以实现预期效果。
@@ -17,12 +15,12 @@ LogVision是一个整合了web日志聚合、分发、实时分析、入侵检�
 [原型版本的介绍视频](https://www.bilibili.com/video/BV1eb411T77r)
 
 ## 系统架构
-![arch](https://github.com/xander-wang/logvision/images/arch.png)
+![arch](https://github.com/xander-wang/logvision/blob/master/images/arch.png)
 ## 数据流向
 （数字代表处理步骤）  
-![dataflow](https://github.com/xander-wang/logvision/images/dataflow.png)
+![dataflow](https://github.com/xander-wang/logvision/blob/master/images/dataflow.png)
 ## 入侵检测流程
-![idsflow](https://github.com/xander-wang/logvision/images/idsflow.png)
+![idsflow](https://github.com/xander-wang/logvision/blob/master/images/idsflow.png)
 ## 项目结构
 - flask：Flask Web后端
 - spark：日志分析与入侵检测的实现
@@ -65,7 +63,7 @@ sbt assembly
 spark-submit --class learning logvision.jar
 ```
 你将可以看到如下结果：  
-![idoutput](https://github.com/xander-wang/logvision/images/idoutput.png)  
+![idoutput](https://github.com/xander-wang/logvision/blob/master/images/idoutput.png)  
 两个表格分别代表正常与异常数据集的入侵检测结果，下面四个表格可用于判断识别准确率。如图中所示250条正常测试数据被检测为250条正常，识别率100%；250条异常测试数据被检测为240条异常，10条正常，准确率96%。
 ### 启动可视化后端
 在```flask```目录下执行如下命令，下载依赖包：
@@ -94,8 +92,8 @@ spark-submit --class streaming logvision.jar
 ### 查看可视化结果
 至此你已经完成了后端组件的配置，通过浏览器访问Web端主机的```5000```端口可以查看到实时日志分析的可视化结果：  
 欢迎界面：  
-![welcome](https://github.com/xander-wang/logvision/images/welcome.png)  
+![welcome](https://github.com/xander-wang/logvision/blob/master/images/welcome.png)  
 实时日志分析界面：  
-![analysis](https://github.com/xander-wang/logvision/images/analysis.png)  
+![analysis](https://github.com/xander-wang/logvision/blob/master/images/analysis.png)  
 实时入侵检测界面：  
-![id](https://github.com/xander-wang/logvision/images/id.png)
+![id](https://github.com/xander-wang/logvision/blob/master/images/id.png)
