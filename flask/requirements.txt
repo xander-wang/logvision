@@ -1,5 +1,5 @@
 Flask_SocketIO==4.3.0
-requests==2.23.0
+requests==2.31.0
 kafka_python==2.0.1
 redis==3.5.0
 flask==1.1.2
