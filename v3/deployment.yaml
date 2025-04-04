@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logvision-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: logvision
+  template:
+    metadata:
+      labels:
+        app: logvision
+    spec:
+      containers:
+      - name: logvision
+        image: logvision:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: logvision-service
+spec:
+  selector:
+    app: logvision
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: logvision-ingress
+spec:
+  rules:
+  - host: logvision.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: logvision-service
+            port:
+              number: 80
