@@ -21,6 +21,8 @@ thread_lock = Lock()
 time_interval = 1
 kafka_bootstrap_servers = "10.0.0.222:9092"
 redis_con_pool = redis.ConnectionPool(host='10.0.0.222', port=6379, decode_responses=True)
+# baidu map app key, replace it with your own key
+map_ak = ''
 
 
 # 页面路由与对应页面的ws接口
@@ -132,7 +134,7 @@ def hot_geo():
             for i in res:
                 # 调用接口获取地理坐标
                 req = requests.get("http://api.map.baidu.com/location/ip",
-                                   {'ak': '0jKbOcwqK7dGZiYIhSai5rsxTnQZ4UQt',
+                                   {'ak': map_ak,
                                     'ip': i[0],
                                     'coor': 'bd09ll'})
                 body = eval(req.text)
@@ -187,7 +189,7 @@ def hot_ip():
             for i in res:
                 # 调用接口获取地理坐标
                 req = requests.get("http://api.map.baidu.com/location/ip",
-                                   {'ak': '0jKbOcwqK7dGZiYIhSai5rsxTnQZ4UQt',
+                                   {'ak': map_ak,
                                     'ip': i[0],
                                     'coor': 'bd09ll'})
                 body = eval(req.text)
@@ -350,7 +352,7 @@ def good_geo():
                     if record['host'] != "foo":
                         # 调用接口获取地理坐标
                         req = requests.get("http://api.map.baidu.com/location/ip",
-                                           {'ak': '0jKbOcwqK7dGZiYIhSai5rsxTnQZ4UQt',
+                                           {'ak': map_ak,
                                             'ip': record['host'],
                                             'coor': 'bd09ll'})
                         body = eval(req.text)
@@ -389,7 +391,7 @@ def bad_geo():
                     if record['host'] != "foo":
                         # 调用接口获取地理坐标
                         req = requests.get("http://api.map.baidu.com/location/ip",
-                                           {'ak': '0jKbOcwqK7dGZiYIhSai5rsxTnQZ4UQt',
+                                           {'ak': map_ak,
                                             'ip': record['host'],
                                             'coor': 'bd09ll'})
                         body = eval(req.text)
@@ -475,7 +477,7 @@ def bad_detail():
                     if record['host'] != "foo":
                         # 调用接口获取地理坐标
                         req = requests.get("http://api.map.baidu.com/location/ip",
-                                           {'ak': '0jKbOcwqK7dGZiYIhSai5rsxTnQZ4UQt',
+                                           {'ak': map_ak,
                                             'ip': record['host'],
                                             'coor': 'bd09ll'})
                         body = eval(req.text)
@@ -512,7 +514,7 @@ def good_detail():
                     if record['host'] != "foo":
                         # 调用接口获取地理坐标
                         req = requests.get("http://api.map.baidu.com/location/ip",
-                                           {'ak': '0jKbOcwqK7dGZiYIhSai5rsxTnQZ4UQt',
+                                           {'ak': map_ak,
                                             'ip': record['host'],
                                             'coor': 'bd09ll'})
                         body = eval(req.text)
