@@ -6,7 +6,7 @@
 - 2025.4.25 v2.0.1: 移除百度地图API Key;
 
 ## 问题交流
-<img src="https://github.com/xander-wang/logvision/blob/master/images/wechat.jpg" width="200px" height="150px" alt="" />
+<img src="https://github.com/xander-wang/logvision/blob/master/images/wechat.jpg" width="200px" height="200px" alt="" />
 
 ## 简介
 LogVision是一个整合了web日志聚合、分发、实时分析、入侵检测、数据存储与可视化的日志分析解决方案。聚合采用Apache Flume，分发采用Apache Kafka，实时处理采用Spark Streaming，入侵检测采用Spark MLlib，数据存储使用HDFS与Redis，可视化采用Flask、SocketIO、Echarts、Bootstrap。
