@@ -1,10 +1,13 @@
 # LogVision / 使用大数据的分布式实时日志分析与入侵检测系统
-[开发文档](https://xander-wang.github.io/2020/05/09/logvision/)
-## 版本记录（当前2.0）
-- 2018.12.8 v1.0：原型版本，有bug。
-- 2020.5.9 v2.0：初步完善版本，可以实现预期效果。
+
+## 版本记录
+- 2018.12.8 v1.0：POC版本;
+- 2020.5.9 v2.0：初步完善版本，可以实现预期效果;
+- 2025.4.25 v2.0.1: 移除百度地图API Key;
+
 ## 问题交流
-- Telegram群组：https://t.me/logv123
+![arch](https://github.com/xander-wang/logvision/blob/master/images/wechat.png)
+
 ## 简介
 LogVision是一个整合了web日志聚合、分发、实时分析、入侵检测、数据存储与可视化的日志分析解决方案。聚合采用Apache Flume，分发采用Apache Kafka，实时处理采用Spark Streaming，入侵检测采用Spark MLlib，数据存储使用HDFS与Redis，可视化采用Flask、SocketIO、Echarts、Bootstrap。
 
